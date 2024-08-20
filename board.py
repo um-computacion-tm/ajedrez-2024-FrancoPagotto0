@@ -1,4 +1,4 @@
-from piece import Rook
+from rook import Rook
 
 class Board:
     def __init__(self):
@@ -14,4 +14,4 @@ class Board:
         self.position[7][0] = Rook("WHITE")
     
     def get_piece(self, row, col):
-        return self.__positions__[row][col]
+        return self.position[row][col]
