@@ -27,7 +27,7 @@ def play(chess):
         print("\nJuego interrumpido por el usuario")
         exit(0)
     except Exception as e:
-        print("Ocurrio un error:", e)
+        print("Ocurrio un error:",e )
 
 if __name__ == '__main__':
     main()
