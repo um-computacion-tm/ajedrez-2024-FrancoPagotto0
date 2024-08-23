@@ -1,6 +1,7 @@
 [run]
 source =
     main
+    board
     test
 omit =
     venv/*
