@@ -1,5 +1,8 @@
 [run]
-
+source =
+  chess
+  main
+  board
 omit =
     venv/*
     */test*
