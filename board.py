@@ -1,5 +1,6 @@
 from rook import Rook
 from pawn import Pawn
+from horse import Horse
 
 class Board:
     def __init__(self):
@@ -19,6 +20,12 @@ class Board:
         for i in range(8):
             self.position[1][i] = Pawn("WHITE") 
             self.position[6][i] = Pawn("BLACK") 
+        
+         # Posición inicial Horse
+        self.position[0][1] = Horse("BLACK")
+        self.position[0][6] = Horse("BLACK")
+        self.position[7][1] = Horse("WHITE")
+        self.position[7][6] = Horse("WHITE")
 
 
     def __str__(self):

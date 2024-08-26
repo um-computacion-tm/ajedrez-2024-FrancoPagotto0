@@ -1,6 +1,10 @@
-class Horse:
-    def __init__(self, color):
-        self.color = color
-        self.name = "Horse"
-    
+from piece import Piece
+
+class Horse(Piece):
+    def __str__(self):
+        if self.color == "WHITE":
+            return "♞"
+        else:
+            return "♘"
+ 
    
