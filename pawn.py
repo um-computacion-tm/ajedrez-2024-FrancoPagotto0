@@ -7,4 +7,3 @@ class Pawn(Piece):
         else:
             return "♟"
       
-"♙"  "♟"

@@ -20,9 +20,9 @@ class TestBoard(unittest.TestCase):
 
     def test_get_piece_empty_positions(self):
         # Verifica que las posiciones vacías den none
-          self.assertIsNone(self.board.get_piece(1, 1))
+          self.assertIsNone(self.board.get_piece(3, 1))
           self.assertIsNone(self.board.get_piece(4, 4))
-          self.assertIsNone(self.board.get_piece(6, 6))
+          self.assertIsNone(self.board.get_piece(5, 2))
     
 
     def test_str_board(self):
@@ -30,14 +30,14 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(
             str(board),
             (   
-                "♖      ♖\n"
+                "♖♘    ♘♖\n"
+                "♙♙♙♙♙♙♙♙\n"
                 "        \n"
                 "        \n"
                 "        \n"
                 "        \n"
-                "        \n"
-                "        \n"
-                "♜      ♜\n"
+                "♟♟♟♟♟♟♟♟\n"
+                "♜♞    ♞♜\n"
             )
         )
 if __name__ == '__main__':
