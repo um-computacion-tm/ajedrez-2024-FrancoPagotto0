@@ -1,6 +1,11 @@
-class Queen:
-    def __init__(self, color):
-        self.color = color
-        self.name = "Queen"
+
+from piece import Piece
+
+class Queen(Piece):
+    def __str__(self):
+        if self.color == "WHITE":
+            return "♛"
+        else:
+            return "♕"
     
   
