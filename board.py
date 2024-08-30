@@ -3,7 +3,7 @@ from pawn import Pawn
 from horse import Horse
 from bishop import Bishop
 from queen import Queen
-
+from king import King
 
 class Board:
     def __init__(self):
@@ -39,6 +39,8 @@ class Board:
         self.position[0][3] = Queen("BLACK")
         self.position[7][3] = Queen("WHITE")
 
+        self.position[0][4] = King("BLACK")
+        self.position[7][4] = King("WHITE")
 
 
     def __str__(self):

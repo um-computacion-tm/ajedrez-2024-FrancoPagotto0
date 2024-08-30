@@ -1,5 +1,8 @@
-class King:
-    def __init__(self, color):
-        self.color = color
-        self.name = "King"
-    
+from piece import Piece
+
+class King(Piece):
+    def __str__(self):
+        if self.color == "WHITE":
+            return "♚"
+        else:
+            return "♔"
