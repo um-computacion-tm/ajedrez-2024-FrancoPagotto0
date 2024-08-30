@@ -2,6 +2,8 @@ from rook import Rook
 from pawn import Pawn
 from horse import Horse
 from bishop import Bishop
+from queen import Queen
+
 
 class Board:
     def __init__(self):
@@ -27,11 +29,15 @@ class Board:
         self.position[0][6] = Horse("BLACK")
         self.position[7][1] = Horse("WHITE")
         self.position[7][6] = Horse("WHITE")
-
+        # Posición inicial bishop
         self.position[0][2] = Bishop("BLACK")
         self.position[0][5] = Bishop("BLACK")
         self.position[7][2] = Bishop("WHITE")
         self.position[7][5] = Bishop("WHITE")
+
+        # Posición inicial Queen
+        self.position[0][3] = Queen("BLACK")
+        self.position[7][3] = Queen("WHITE")
 
 
 
