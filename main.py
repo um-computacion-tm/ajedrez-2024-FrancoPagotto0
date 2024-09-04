@@ -22,7 +22,7 @@ def play(chess):
             to_col,
         )
     except ValueError:
-        print("Ingrsar numero valido en filas y columnas.")
+        print("Ingresar numero valido en filas y columnas.")
     except KeyboardInterrupt:
         print("\nJuego interrumpido por el usuario")
         exit(0)
