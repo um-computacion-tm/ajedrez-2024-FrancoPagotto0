@@ -1,4 +1,5 @@
 from chess import Chess
+from exceptions import InvalidMove, InvalidTurn, EmptyPosition
 
 def main():
     chess = Chess()
@@ -21,13 +22,11 @@ def play(chess):
             to_row,
             to_col,
         )
-    except ValueError:
-        print("Ingresar numero valido en filas y columnas.")
-    except KeyboardInterrupt:
-        print("\nJuego interrumpido por el usuario")
-        exit(0)
+
+    except InvalidMove as e:
+        print(e)
     except Exception as e:
-        print("Ocurrio un error:",e )
+        print("error", e)
 
 if __name__ == '__main__':
     main()
