@@ -91,5 +91,6 @@ class TestMain(unittest.TestCase):
         #verifica que el print  sea llamado con los dos  argumentos correctos
         calls = [call for call in mock_print.call_args_list if "Ocurrio un error:" in call[0]]
         self.assertEqual(mock_chess_move.call_count, 1)
+        
 if __name__ == '__main__':
     unittest.main()
