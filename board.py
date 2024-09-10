@@ -1,4 +1,5 @@
 from rook import Rook
+from exceptions import OutOfBoard, InvalidMove
 
 class Board:
     def __init__(self, for_test = False):
@@ -26,7 +27,21 @@ class Board:
         return board_str
     
     def get_piece(self, row, col):
+        if not ( 0 <= row < 8 or 0 <= col < 8):
+            raise OutOfBoard()
         return self.__position__[row][col]
-   
+    
     def set_piece(self, row, col, piece):
+        if not (0 <= row < 8 and 0 <= col < 8):
+            raise OutOfBoard()
         self.__position__[row][col] = piece
+    
+    def move(self, from_row, from_col, to_row, to_col):
+        origin = self.get_piece(from_row, from_col)
+        destination = self.get_piece(to_row, to_col)
+        
+        if destination is not None and destination.get_color() == origin.get_color():
+            raise InvalidMove("No puedes tomar una pieza de tu mismo color")
+        
+        self.set_piece(to_row, to_col, origin)
+        self.set_piece(from_row, from_col, None)
