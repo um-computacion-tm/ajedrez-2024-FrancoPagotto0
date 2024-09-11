@@ -1,44 +1,64 @@
 import unittest
 from board import Board
 from rook import Rook
+from exceptions import OutOfBoard
 
 class TestBoard(unittest.TestCase):
-    def setUp(self):
-        self.board = Board()
-        def test_get_piece_initial_positions(self):
-        # posicione iniciales del tablero
-          self.assertIsInstance(self.board.get_piece(0, 0), Rook)
-          self.assertIsInstance(self.board.get_piece(0, 7), Rook)
-          self.assertIsInstance(self.board.get_piece(7, 0), Rook)
-          self.assertIsInstance(self.board.get_piece(7, 7), Rook)
-
-        #  color de las piezas en pos inicial
-          self.assertEqual(self.board.get_piece(0, 0).color, "BLACK")
-          self.assertEqual(self.board.get_piece(0, 7).color, "BLACK")
-          self.assertEqual(self.board.get_piece(7, 0).color, "WHITE")
-          self.assertEqual(self.board.get_piece(7, 7).color, "WHITE")
-
-    def test_get_piece_empty_positions(self):
-        # Verifica que las posiciones vacías den none
-          self.assertIsNone(self.board.get_piece(3, 1))
-          self.assertIsNone(self.board.get_piece(4, 4))
-          self.assertIsNone(self.board.get_piece(5, 2))
-    
-
     def test_str_board(self):
         board = Board()
         self.assertEqual(
             str(board),
-            (   
-                "♖♘♗♕♔♗♘♖\n"
-                "♙♙♙♙♙♙♙♙\n"
+            (
+                "♖      ♖\n"
                 "        \n"
                 "        \n"
                 "        \n"
                 "        \n"
-                "♟♟♟♟♟♟♟♟\n"
-                "♜♞♝♛♚♝♞♜\n"
+                "        \n"
+                "        \n"
+                "♜      ♜\n"
             )
+        )
+
+    def test_move(self):
+        board = Board(for_test=True)
+        rook = Rook(color='BLACK', board=board)
+        board.set_piece(0, 0, rook)
+
+        board.move(
+            from_row=0,
+            from_col=0,
+            to_row=0,
+            to_col=1,
+        )
+
+        self.assertIsInstance(
+            board.get_piece(0, 1),
+            Rook,
+        )
+        self.assertEqual(
+            str(board),
+            (
+                " ♖      \n"
+                "        \n"
+                "        \n"
+                "        \n"
+                "        \n"
+                "        \n"
+                "        \n"
+                "        \n"
+            )
+        )
+
+    def test_get_piece_out_of_range(self):
+        board = Board(for_test=True)
+
+        with self.assertRaises(OutOfBoard) as exc:
+            board.get_piece(10, 10)
+
+        self.assertEqual(
+            exc.exception.message,
+            "La posicion indicada se encuentra fuera del tablero"
         )
 if __name__ == '__main__':
     unittest.main()
