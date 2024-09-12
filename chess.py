@@ -18,7 +18,6 @@ class Chess:
         to_col,
     ):
         piece = self.__board__.get_piece(from_row, from_col)
-        self.change_turn()
         if not piece:
             raise EmptyPosition()
         if not piece.get_color() == self.__turn__:
