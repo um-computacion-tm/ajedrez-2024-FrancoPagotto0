@@ -1,4 +1,5 @@
 from rook import Rook
+from horse import Horse
 from exceptions import OutOfBoard, InvalidMove
 
 class Board:
@@ -15,6 +16,13 @@ class Board:
             self.__position__[7][7] = Rook("WHITE",self)
             self.__position__[7][0] = Rook("WHITE",self)
 
+        #COLOCAR CABALLO
+            self.__position__[0][1] = Horse("BLACK", self)
+            self.__position__[0][6] = Horse("BLACK", self)
+            self.__position__[7][1] = Horse("WHITE", self)
+            self.__position__[7][6] = Horse("WHITE", self)
+
+          
     def __str__(self):
         board_str = ""
         for row in self.__position__:
