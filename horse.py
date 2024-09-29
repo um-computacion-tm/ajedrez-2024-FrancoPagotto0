@@ -10,62 +10,21 @@ class Horse(Piece):
         from_col,
         to_row,
         to_col,
-    ):
-        possible_positions = (
-            self.possible_positions_up_right(from_row, from_col) +   
-            self.possible_positions_up_left(from_row, from_col) +    
-            self.possible_positions_down_right(from_row, from_col) + 
-            self.possible_positions_down_left(from_row, from_col)    
-        )
+    ):                     
+        directions = [
+            (2, 1), (2, -1), (-2, 1), (-2, -1),  # Movimientos en L hacia arriba y hacia abajo
+            (1, 2), (1, -2), (-1, 2), (-1, -2)  # Movimientos en L hacia los lados
+        ]
+        possible_positions = self.possible_moves(from_row, from_col, directions)
         return (to_row, to_col) in possible_positions
 
-    def possible_positions_up_right(self, row, col):
-        possibles = []
-        horse_moves = [(2, 1), (1, 2)]  
-        for move in horse_moves:
-            new_row = row + move[0]
-            new_col = col + move[1]
+    def possible_moves(self, from_row, from_col, directions):
+        moves = []
+        for dr, dc in directions:
+            new_row, new_col = from_row + dr, from_col + dc
             if 0 <= new_row < 8 and 0 <= new_col < 8:
-                other_piece = self.__board__.get_piece(new_row, new_col)
-                if other_piece is None or other_piece.get_color() != self.get_color():
-                    possibles.append((new_row, new_col))
-        return possibles
-
-    def possible_positions_up_left(self, row, col):
-        possibles = []
-        horse_moves = [(2, -1), (1, -2)]  
-        for move in horse_moves:
-            new_row = row + move[0]
-            new_col = col + move[1]
-            if 0 <= new_row < 8 and 0 <= new_col < 8:
-                other_piece = self.__board__.get_piece(new_row, new_col)
-                if other_piece is None or other_piece.get_color() != self.get_color():
-                    possibles.append((new_row, new_col))
-        return possibles
-
-    def possible_positions_down_right(self, row, col):
-        possibles = []
-        horse_moves = [(-2, 1), (-1, 2)]
-        for move in horse_moves:
-            new_row = row + move[0]
-            new_col = col + move[1]
-            if 0 <= new_row < 8 and 0 <= new_col < 8:
-                other_piece = self.__board__.get_piece(new_row, new_col)
-                if other_piece is None or other_piece.get_color() != self.get_color():
-                    possibles.append((new_row, new_col))
-        return possibles
-
-    def possible_positions_down_left(self, row, col):
-        possibles = []
-        horse_moves = [(-2, -1), (-1, -2)]  
-        for move in horse_moves:
-            new_row = row + move[0]
-            new_col = col + move[1]
-            if 0 <= new_row < 8 and 0 <= new_col < 8:
-                other_piece = self.__board__.get_piece(new_row, new_col)
-                if other_piece is None or other_piece.get_color() != self.get_color():
-                    possibles.append((new_row, new_col))
-        return possibles
-
-
-   
+                destination_piece = self.__board__.get_piece(new_row, new_col)
+                # Agregar solo posiciones vacías o ocupadas por piezas del oponente
+                if destination_piece is None or destination_piece.get_color() != self.get_color():
+                    moves.append((new_row, new_col))
+        return moves
