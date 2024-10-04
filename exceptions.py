@@ -11,3 +11,19 @@ class EmptyPosition(InvalidMove):
 
 class OutOfBoard(InvalidMove):
     message = "La posicion indicada se encuentra fuera del tablero"
+    
+class MoveForwardError(InvalidMove):
+    message = "El peón no puede capturar hacia adelante"
+
+class PathOccupiedError(InvalidMove):
+    message = "Hay piezas en el camino"
+
+class CaptureOwnPieceError(InvalidMove):
+    message = "No puedes capturar una pieza de tu propio color"
+    
+class GameOver(Exception):  
+    message = "Fin del juego. ¡Gracias por jugar!"
+    
+    def __init__(self, message):
+        self.__message__ = message
+        super().__init__(message)

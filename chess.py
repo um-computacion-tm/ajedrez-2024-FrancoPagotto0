@@ -5,17 +5,12 @@ class Chess:
     def __init__(self):
         self.__board__ = Board()
         self.__turn__ = "WHITE"
-
+        
     def get_board(self):
-        return self.__board__.get_board()   
+        return self.__board__
 
-    def move(
-        self,
-        from_row,
-        from_col,
-        to_row,
-        to_col,
-    ):
+    def move(self, from_row, from_col, to_row, to_col):
+        
         try:
             piece = self.__board__.get_piece(from_row, from_col)
 
@@ -30,16 +25,5 @@ class Chess:
 
         except (EmptyPosition, InvalidMove, InvalidTurn) as e:
            print(str(e)) 
-    @property
-
-    def turn(self):
-        return self.__turn__
-    
-    def show_board(self):
-        return str(self.__board__)
-
     def change_turn(self):
-        if self.__turn__ == "WHITE":
-            self.__turn__ = "BLACK"
-        else:
-            self.__turn__ = "WHITE"
+        self.__turn__ = "BLACK" if self.__turn__ == "WHITE" else "WHITE"
