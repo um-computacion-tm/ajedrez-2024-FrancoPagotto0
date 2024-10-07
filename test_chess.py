@@ -1,50 +1,59 @@
 import unittest
-from unittest.mock import MagicMock
-from board import Board
+from unittest.mock import MagicMock, patch
 from chess import Chess
-from exceptions import EmptyPosition 
+from exceptions import InvalidMove, InvalidTurn, EmptyPosition
+
+
+
 
 class TestChess(unittest.TestCase):
 
-    def test_is_playing(self):
-        chess_game = Chess()
-        self.assertTrue(chess_game.is_playing())
+    @patch('board.Board')
+    def setUp(self, MockBoard):
+        self.mock_board = MockBoard.return_value
+        self.chess = Chess()
 
-    def test_change_turn(self):
-        chess_game = Chess()
-        self.assertEqual(chess_game.turn, "WHITE")
-        chess_game.change_turn()
-        self.assertEqual(chess_game.turn, "BLACK")
-        chess_game.change_turn()
-        self.assertEqual(chess_game.turn, "WHITE")
+    def test_initial_turn(self):
+        self.assertEqual(self.chess._Chess__turn__, "WHITE")
 
-    def test_move_get_piece_and_change_turn(self):
-        # Crear un mock del tablero
-        mock_board = MagicMock(spec=Board)
-        
-        # Crear un mock de la pieza y configurar su color
+    def test_get_board(self):
+        self.assertEqual(self.chess.get_board(), self.mock_board)
+
+    def test_move_empty_position(self):
+        self.mock_board.get_piece.return_value = None
+        with self.assertRaises(EmptyPosition):
+            self.chess.move(0, 0, 1, 1)
+
+    def test_move_invalid_turn(self):
+        mock_piece = MagicMock()
+        mock_piece.get_color.return_value = "BLACK"
+        self.mock_board.get_piece.return_value = mock_piece
+        with self.assertRaises(InvalidTurn):
+            self.chess.move(0, 0, 1, 1)
+
+    def test_move_invalid_move(self):
         mock_piece = MagicMock()
         mock_piece.get_color.return_value = "WHITE"
-        # Configurar el mock del tablero para devolver la pieza en la posición (0, 1)
-        mock_board.get_piece.side_effect = lambda row, col: mock_piece if (row, col) == (0, 1) else None
-        
-        # Crear una instancia de Chess y asignar el mock del tablero
-        chess_game = Chess()
-        chess_game._Chess__board__ = mock_board
-        
-        # Llamar al método move y manejar la excepción para ver qué está fallando
-        try:
-            chess_game.move(0, 1, 0, 2)
-        except EmptyPosition:
-            print("Excepción de posición vacía")
+        mock_piece.valid_positions.return_value = False
+        self.mock_board.get_piece.return_value = mock_piece
+        with self.assertRaises(InvalidMove):
+            self.chess.move(0, 0, 1, 1)
 
-        # Verificar que get_piece fue llamado con las posiciones correctas
-        mock_board.get_piece.assert_any_call(0, 1)
-        mock_board.get_piece.assert_any_call(0, 2)
-        
-        # Verificar que el turno cambió a "BLACK"
-        self.assertEqual(chess_game.turn, "BLACK")
+    def test_move_valid(self):
+        mock_piece = MagicMock()
+        mock_piece.get_color.return_value = "WHITE"
+        mock_piece.valid_positions.return_value = True
+        self.mock_board.get_piece.return_value = mock_piece
+
+        self.chess.move(0, 0, 1, 1)
+        self.mock_board.move.assert_called_once_with(0, 0, 1, 1)
+        self.assertEqual(self.chess._Chess__turn__, "BLACK")
+
+    def test_change_turn(self):
+        self.chess.change_turn()
+        self.assertEqual(self.chess._Chess__turn__, "BLACK")
+        self.chess.change_turn()
+        self.assertEqual(self.chess._Chess__turn__, "WHITE")
 
 if __name__ == '__main__':
     unittest.main()
-
