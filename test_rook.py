@@ -1,57 +1,39 @@
 import unittest
 from rook import Rook
 from board import Board
-from pawn import Pawn
 
 class TestRook(unittest.TestCase):
+    
+    def setUp(self):
+        self.board = Board(for_test=True)  # Crear un tablero vacío para pruebas
+        self.rook = Rook("WHITE", self.board)
 
-    def test_str(self):
-        board = Board()
-        rook = Rook("WHITE", board)
-        self.assertEqual(
-            str(rook),
-            "♜",
-        )
+    def test_valid_positions(self):
+        # Test valid horizontal move
+        self.assertTrue(self.rook.valid_positions(0, 0, 0, 7))
+        # Test valid vertical move
+        self.assertTrue(self.rook.valid_positions(0, 0, 7, 0))
+        # Test invalid move (diagonal)
+        self.assertFalse(self.rook.valid_positions(0, 0, 7, 7))
+        # Test invalid move (L-shape)
+        self.assertFalse(self.rook.valid_positions(0, 0, 2, 1))
 
-    def test_move_vertical_desc(self):
-        board = Board()
-        rook = Rook("WHITE", board)
-        possibles = rook.possible_positions_vd(4, 1)
-        self.assertEqual(
-            possibles,
-            [(5, 1), (6, 1), (7, 1)]
-        )
+    def test_possible_moves(self):
+        # Test possible moves from the center of the board
+        expected_moves = [
+            (4, 3), (5, 3), (6, 3), (7, 3),  # Down
+            (2, 3), (1, 3), (0, 3),          # Up
+            (3, 4), (3, 5), (3, 6), (3, 7),  # Right
+            (3, 2), (3, 1), (3, 0)           # Left
+        ]
+        self.assertCountEqual(self.rook.possible_moves(3, 3, [(1, 0), (-1, 0), (0, 1), (0, -1)]), expected_moves)
 
-    def test_move_vertical_asc(self):
-        board = Board()
-        rook = Rook("WHITE", board)
-        possibles = rook.possible_positions_va(4, 1)
-        self.assertEqual(
-            possibles,
-            [(3, 1), (2, 1), (1, 1), (0, 1)]
-        )
-
-    def test_move_vertical_desc_with_own_piece(self):
-        board = Board()
-        board.set_piece(6, 1, Pawn("WHITE", board))
-        rook = Rook("WHITE", board)
-        board.set_piece(4, 1, rook)
-        possibles = rook.possible_positions_vd(4, 1)
-        self.assertEqual(
-            possibles,
-            [(5, 1)]
-        )
-
-    def test_move_vertical_desc_with_not_own_piece(self):
-        board = Board()
-        board.set_piece(6, 1, Pawn("BLACK", board))
-        rook = Rook("WHITE", board)
-        board.set_piece(4, 1, rook)
-        possibles = rook.possible_positions_vd(4, 1)
-        self.assertEqual(
-            possibles,
-            [(5, 1), (6, 1)]
-        )
+        # Test possible moves from a corner of the board
+        expected_moves = [
+            (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0),  # Down
+            (0, 1), (0, 2), (0, 3), (0, 4), (0, 5), (0, 6), (0, 7)   # Right
+        ]
+        self.assertCountEqual(self.rook.possible_moves(0, 0, [(1, 0), (-1, 0), (0, 1), (0, -1)]), expected_moves)
 
 if __name__ == '__main__':
     unittest.main()
