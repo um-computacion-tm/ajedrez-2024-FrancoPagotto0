@@ -18,4 +18,5 @@ class King(Piece):
         possible_positions = self.possible_moves(from_row, from_col, directions)
         return (to_row, to_col) in possible_positions
 
+  
     

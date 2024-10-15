@@ -4,6 +4,10 @@ source =
   main
   board
   rook
+  horse
+  pawn
+  bishop
+  king
 omit =
     venv/*
     */test*

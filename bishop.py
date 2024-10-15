@@ -28,6 +28,9 @@ class Bishop(Piece):
         # Check the destination square
         destination_piece = self.get_board().get_piece(to_row, to_col)
         if destination_piece is None or destination_piece.get_color() != self.get_color():
-            return True
+          
+          
+         def __str__(self):
+           return self.white_str if self.get_color() == "WHITE" else self.black_str
         
-        return False
+       

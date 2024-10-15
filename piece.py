@@ -39,4 +39,7 @@ class Piece:
 
     def valid_positions(self):
         raise NotImplementedError("This method should be overridden in subclasses")
-  
+    
+
+    def __str__(self):
+        return self.white_str if self.get_color() == "WHITE" else self.black_str
