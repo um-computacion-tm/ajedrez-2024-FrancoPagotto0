@@ -1,5 +1,9 @@
 [run]
-
+source =
+  chess
+  main
+  board
+  rook
 omit =
     venv/*
     */test*
