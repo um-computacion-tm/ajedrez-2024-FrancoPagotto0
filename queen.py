@@ -4,6 +4,9 @@ class Queen(Piece):
     white_str = "♛"
     black_str = "♕"
     
+    def __init__(self, color, board):
+        super().__init__(color, board)
+    
     def valid_positions(
         self,
         from_row,
