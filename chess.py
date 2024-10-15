@@ -8,17 +8,20 @@ class Chess:
         
     def get_board(self):
         return self.__board__
-
-    def move(self, from_row, from_col, to_row, to_col):
-        piece = self.__board__.get_piece(from_row, from_col)
-
+    def move(self, start_x, start_y, end_x, end_y):
+        piece = self.__board__.get_piece(start_x, start_y)
+        
         if not piece:
-            raise EmptyPosition() 
+            raise EmptyPosition("La posición está vacía")
         if piece.get_color() != self.__turn__:
-            raise InvalidTurn("No puedes mover pieza de otro jugador")
-        if not piece.valid_positions(from_row, from_col, to_row, to_col):
-            raise InvalidMove()  
-        self.__board__.move(from_row, from_col, to_row, to_col)
+            raise EmptyPosition("No puedes mover pieza de otro jugador")
+        if not piece.valid_positions(start_x, start_y, end_x, end_y):
+            raise InvalidMove("Movimiento inválido")
+        
+        
+        
+        
+        self.__board__.move(start_x, start_y, end_x, end_y)
         self.change_turn()
 
     def change_turn(self):
