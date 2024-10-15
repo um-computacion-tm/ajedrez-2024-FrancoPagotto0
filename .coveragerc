@@ -8,6 +8,7 @@ source =
   pawn
   bishop
   king
+  queen
 omit =
     venv/*
     */test*
